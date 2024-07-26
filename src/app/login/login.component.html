@@ -1,0 +1,17 @@
+<h1>Welcome To Vehicle Service Management!</h1>
+<h3>Please Login Yourself</h3>
+
+
+<div *ngIf="msg!=''">
+    <p>{{msg}}</p>
+</div>
+
+<form #userForm="ngForm" (ngSubmit)="onLoginFormSubmit(userForm)">
+    <label for="name">User I'd : </label>
+    <input placeholder="User I'd" name="userid" type="text" id="name" ngModel required/>
+    <br/><br/>
+    <label for="password">Password : </label>
+    <input placeholder="Password" name="password"  type="password" id="password" ngModel required/>
+    <br/><br/>
+   <button type="submit" [disabled]="!userForm.valid" >Login</button>
+</form>

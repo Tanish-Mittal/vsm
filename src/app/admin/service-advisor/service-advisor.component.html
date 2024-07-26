@@ -1,0 +1,113 @@
+<div class="search" *ngIf="!Create && !isEdit">
+    <input name="id" id="search" type="text" placeholder="Enter_Service_Advisor_Id" [(ngModel)]="Search_id" />
+    <button (click)="Search()">Search</button>
+    <div class="SearchedServiceAdvisor" *ngIf="search != 2">
+      <div *ngIf="search == 0">
+        <table>
+          <thead>
+            <tr>
+              <th>Service Advisor ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Password</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>Update/Delete Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ upServiceAdvisor.serviceAdvisorID }}</td>
+              <td>{{ upServiceAdvisor.firstName }}</td>
+              <td>{{ upServiceAdvisor.lastName }}</td>
+              <td>{{ upServiceAdvisor.password }}</td>
+              <td>{{ upServiceAdvisor.phone }}</td>
+              <td>{{ upServiceAdvisor.email }}</td>
+              <td>
+                <button (click)="update(upServiceAdvisor.serviceAdvisorID)">Update</button>
+                <button (click)="delete(upServiceAdvisor.serviceAdvisorID)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="search == 1">
+        <h1>Enter Registered Service Advisor Id</h1>
+      </div>
+      <button (click)="close()">Close search</button>
+    </div>
+  </div>
+  
+  <div class="allServiceAdvisorsTable" *ngIf="!Create && !isEdit">
+    <table>
+      <thead>
+        <tr>
+          <th>Service Advisor ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Password</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Update/Delete Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let serviceAdvisor of allServiceAdvisors">
+          <td>{{ serviceAdvisor.serviceAdvisorID }}</td>
+          <td>{{ serviceAdvisor.firstName }}</td>
+          <td>{{ serviceAdvisor.lastName }}</td>
+          <td>{{ serviceAdvisor.password }}</td>
+          <td>{{ serviceAdvisor.phone }}</td>
+          <td>{{ serviceAdvisor.email }}</td>
+          <td>
+            <button (click)="update(serviceAdvisor.serviceAdvisorID)">Update</button>
+            <button (click)="delete(serviceAdvisor.serviceAdvisorID)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="AddNew" (click)="create()">Add New</button>
+  </div>
+  
+  <div class="createServiceAdvisor" *ngIf="Create">
+    <p>Service Advisor Detail Form</p>
+    <form #serviceAdvisorForm="ngForm" (ngSubmit)="submit(serviceAdvisorForm)">
+      <label for="firstName">First Name:</label>
+      <input type="text" name="firstName" id="firstName" #firstName="ngModel" ngModel placeholder="First Name" required/><br><br>
+      <p *ngIf="!firstName.valid && firstName.touched">Enter First Name</p>
+  
+      <label for="lastName">Last Name:</label>
+      <input type="text" name="lastName" id="lastName" #lastName="ngModel" ngModel placeholder="Last Name" required/><br><br>
+      <p *ngIf="!lastName.valid && lastName.touched">Enter Last Name</p>
+  
+     
+      <label for="phone">Phone:</label>
+      <input type="text" name="phone" id="phone" #phone="ngModel" ngModel placeholder="Phone" required/><br><br>
+      <p *ngIf="!phone.valid && phone.touched">Enter Phone</p>
+  
+      <label for="email">Email:</label>
+      <input type="email" name="email" id="email" #email="ngModel" ngModel placeholder="Email" required>
+      <p *ngIf="!email.valid && email.touched">Enter Email</p>
+      <button type="submit" [disabled]="!serviceAdvisorForm.valid">Submit</button>
+    </form>
+  </div>
+  <div *ngIf="isEdit">
+    <h3>Update The Detail for Service Advisor Id : {{upServiceAdvisor.serviceAdvisorID}}</h3>
+    <label for="firstName">First Name:</label>
+    <input id="firstName" type="text" [(ngModel)]="upServiceAdvisor.firstName"/><br><br>
+    <label for="lastName">Last Name:</label>
+<input id="lastName" type="text" [(ngModel)]="upServiceAdvisor.lastName"/><br><br>
+
+<label for="Password">Password:</label>
+<input id="Password" type="text" [(ngModel)]="upServiceAdvisor.password"/><br><br>
+
+<label for="phone">Phone :</label>
+<input id="phone" type="text" [(ngModel)]="upServiceAdvisor.phone"/><br><br>
+
+<label for="email">Email :</label>
+<input id="email" type="text" [(ngModel)]="upServiceAdvisor.email"/><br><br>
+
+<button (click)="update(upServiceAdvisor.serviceAdvisorID)">Save Update</button>
+</div>
+  
+  

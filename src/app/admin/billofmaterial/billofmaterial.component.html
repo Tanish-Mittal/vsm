@@ -1,0 +1,62 @@
+<div class="search">
+    <input name="id" id="search" type="number" placeholder="Enter Bill Of Material ID" [(ngModel)]="Search_id" />
+    <button (click)="Search()">Search</button>
+    <div class="SearchedBillOfMaterial" *ngIf="search != 2">
+      <div *ngIf="search == 0">
+        <table>
+          <thead>
+            <tr>
+              <th>Bill Of Material ID</th>
+              <th>Service Record ID</th>
+            
+              <th>Amount</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ upBillOfMaterial?.billOfMaterialID }}</td>
+              <td>{{ upBillOfMaterial?.serviceRecordID }}</td>
+          
+              <td>{{ upBillOfMaterial?.amount }}</td>
+              <td>
+                <button (click)="delete(upBillOfMaterial?.billOfMaterialID)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="search == 1">
+        <h1>Enter Registered Bill Of Material ID</h1>
+      </div>
+      <button (click)="close()">Close search</button>
+    </div>
+  </div>
+  
+  <div class="allBillOfMaterialsTable">
+    <table>
+      <thead>
+        <tr>
+          <th>Bill Of Material ID</th>
+          <th>Service Record ID</th>
+    
+          <th>Amount</th>
+        
+          <th>Delete</th>
+        
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let billOfMaterial of allBillOfMaterials">
+          <td>{{ billOfMaterial.billOfMaterialID }}</td>
+          <td>{{ billOfMaterial.serviceRecordID }}</td>
+      
+          <td>{{ billOfMaterial.amount }}</td>
+          <td>
+            <button (click)="delete(billOfMaterial.billOfMaterialID)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

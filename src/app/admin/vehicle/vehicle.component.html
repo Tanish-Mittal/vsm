@@ -1,0 +1,152 @@
+<div class="search" *ngIf="!Create && !isEdit">
+    <input name="id" id="search" type="number" placeholder="Enter_Vehicle_Id" [(ngModel)]="Search_id" />
+    <button (click)="Search()">Search</button>
+    <div class="SearchedVehicle" *ngIf="search!=2">
+        <div *ngIf="search==0">
+            <table>
+                <thead>
+                  <tr>
+                    <th>Vehicle ID</th>
+                    <th>Company</th>
+                    <th>Model</th>
+                    <th>Year</th>
+                    <th>VIN</th>
+                    <th>Customer ID</th>
+                    <th>Service Due Date</th>
+                    <th>Status</th>
+                    <th>Update/Delete Details</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr >
+                    <td>{{ upVehicle.vehicleID }}</td>
+                    <td>{{ upVehicle.company }}</td>
+                    <td>{{ upVehicle.model }}</td>
+                    <td>{{ upVehicle.year }}</td>
+                    <td>{{ upVehicle.vin }}</td>
+                    <td>{{ upVehicle.customerID }}</td>
+                    
+                    <td>{{ upVehicle.serviceDueDate | date: 'dd-MM-YYYY' }}</td>
+                    <td>{{ upVehicle.status }}</td>
+                    <td>
+                      <button (click)="update(upVehicle.vehicleID)">Udpate</button> 
+                      <button (click)="delete(upVehicle.vehicleID)">Delete</button>
+                    </td>
+                  </tr>
+                 
+                  
+                </tbody>
+              </table>    
+        </div>
+        <div *ngIf="search==1"> <h1>Enter Registered Vehicle Id</h1> </div>  
+        <button (click)="close()">Close search</button>
+    </div>
+</div>
+<div class="allVehiclesTable" *ngIf="!Create && !isEdit">
+<table>
+    <thead>
+      <tr>
+        <th>Vehicle ID</th>
+        <th>Company</th>
+        <th>Model</th>
+        <th>Year</th>
+        <th>VIN</th>
+        <th>Customer ID</th>
+        <th>Service Due Date</th>
+        <th>Status</th>
+        <th>Update/Delete Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let vehicle of allVehicles" >
+        <td>{{ vehicle.vehicleID }}</td>
+        <td>{{ vehicle.company }}</td>
+        <td>{{ vehicle.model }}</td>
+        <td>{{ vehicle.year }}</td>
+        <td>{{ vehicle.vin }}</td>
+        <td>{{ vehicle.customerID }}</td>
+        
+        <td>{{ vehicle.serviceDueDate | date: 'dd-MM-YYYY' }}</td>
+        <td>{{ vehicle.status }}</td>
+        <td>
+          <button (click)="update(vehicle.vehicleID)">Udpate</button> 
+          <button (click)="delete(vehicle.vehicleID)">Delete</button>
+        </td>
+      </tr>
+     
+      
+    </tbody>
+  </table>
+  <button class="AddNew" (click)="create()">Add New</button>
+</div>
+  
+<div class="createVehicle" *ngIf="Create">
+    <p>Vehicle Detail Form</p>
+<form #vehicleForm="ngForm" (ngSubmit)="submit(vehicleForm)">
+ 
+  <label for="make">Company:</label>
+  <input type="text" name="company" id="make" #make="ngModel" ngModel placeholder="Make" required/><br><br>
+  <p *ngIf="!make.valid && make.touched">Enter Make</p>
+
+  <label for="model">Model:</label>
+  <input type="text" name="model" id="model" #model="ngModel" ngModel placeholder="Model" required/><br><br>
+  <p *ngIf="!model.valid && model.touched">Enter Model</p>
+
+  <label for="year">Year:</label>
+  <input type="number" name="year" id="year" #year="ngModel" ngModel placeholder="Year" required/><br><br>
+  <p *ngIf="!year.valid && year.touched">Enter Year</p>
+
+  <label for="vin">VIN:</label>
+  <input type="text" name="vin" id="vin" #vin="ngModel" ngModel placeholder="VIN" required/><br><br>
+  <p *ngIf="!vin.valid && vin.touched">Enter VIN</p>
+
+  <label for="customerId">Customer ID:</label>
+  <input type="number" name="customerId" id="customerId" #customerId="ngModel" ngModel placeholder="Customer ID" required/><br><br>
+  <p *ngIf="!customerId.valid && customerId.touched">Enter Customer ID</p>
+
+  <label for="serviceDueDate">Service Due Date:</label>
+  <input type="date" name="serviceDueDate" id="serviceDueDate" #serviceDueDate="ngModel" ngModel required/><br><br>
+  <p *ngIf="!serviceDueDate.valid && serviceDueDate.touched">Enter Service Due Date</p>
+
+  <label for="status">Status:</label>
+  <select name="status" id="status" #status="ngModel" ngModel required>
+    <option value="Due">Due</option>
+    <option value="Under Servicing">Under Servicing</option>
+    <option value="Serviced">Serviced</option>
+   
+  </select><br><br>
+  <p *ngIf="!status.valid && status.touched">Enter valid Status</p>
+
+  <button type="submit" [disabled]="!vehicleForm.valid">Submit</button>
+</form>
+
+</div>
+
+<div *ngIf="isEdit">
+    <h3>Update The Detail for Vehicle Id : {{upVehicle.vehicleID}}</h3>
+    <label for="company">Company</label>
+    <input id="company" type="text" [(ngModel)]="upVehicle.company"/><br><br>
+    <label for="model">Model:</label>
+<input id="model" type="text" [(ngModel)]="upVehicle.model"/><br><br>
+
+<label for="year">Year:</label>
+<input id="year" type="number" [(ngModel)]="upVehicle.year"/><br><br>
+
+<label for="vin">VIN:</label>
+<input id="vin" type="text" [(ngModel)]="upVehicle.vin"/><br><br>
+
+<label for="customerId">Customer ID:</label>
+<input id="customerId" type="number" [(ngModel)]="upVehicle.customerID"/><br><br>
+
+<label for="serviceDueDate">Service Due Date:</label>
+<input id="serviceDueDate" type="date" [(ngModel)]="upVehicle.serviceDueDate"/><br><br>
+
+<label for="status">Status:</label>
+    <select [(ngModel)]="upVehicle.status">
+        <option value="Due">Due</option>
+        <option value="Under Servicing">Under Servicing</option>
+        <option value="Serviced">Serviced</option>
+    </select><br><br>
+
+<button (click)="update(upVehicle.vehicleID)">Save Update</button>
+</div>

@@ -1,0 +1,124 @@
+<div class="search" *ngIf="!Create && !isEdit">
+    <input name="id" id="search" type="number" placeholder="Enter Service Record ID" [(ngModel)]="Search_id" />
+    <button (click)="Search()">Search</button>
+    <div class="SearchedServiceRecord" *ngIf="search != 2">
+      <div *ngIf="search == 0">
+        <table>
+          <thead>
+            <tr>
+              <th>Service Record ID</th>
+              <th>Vehicle ID</th>
+              <th>Service Advisor ID</th>
+              <th>Service Date</th>
+              <th>Status</th>
+              <th>Update/Delete Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ upServiceRecord.serviceRecordID }}</td>
+              <td>{{ upServiceRecord.vehicleID }}</td>
+              <td>{{ upServiceRecord.serviceAdvisorID }}</td>
+              <td>{{ upServiceRecord.serviceDate | date: 'dd-MM-yyyy' }}</td>
+              <td>{{ upServiceRecord.status }}</td>
+              <td>
+                <button (click)="update(upServiceRecord.serviceRecordID)">Update</button>
+                <button (click)="delete(upServiceRecord.serviceRecordID)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="search == 1">
+        <h1>Enter Registered Service Record ID</h1>
+      </div>
+      <button (click)="close()">Close search</button>
+    </div>
+  </div>
+  
+  <div class="allServiceRecordsTable" *ngIf="!Create && !isEdit">
+    <table>
+      <thead>
+        <tr>
+          <th>Service Record ID</th>
+          <th>Vehicle ID</th>
+          <th>Service Advisor ID</th>
+          <th>Service Date</th>
+          <th>Status</th>
+          <th>Update/Delete Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let serviceRecord of allServiceRecords">
+          <td>{{ serviceRecord.serviceRecordID }}</td>
+          <td>{{ serviceRecord.vehicleID }}</td>
+          <td>{{ serviceRecord.serviceAdvisorID }}</td>
+          <td>{{ serviceRecord.serviceDate | date: 'dd-MM-yyyy' }}</td>
+          <td>{{ serviceRecord.status }}</td>
+          <td>
+            <button (click)="update(serviceRecord.serviceRecordID)">Update</button>
+            <button (click)="delete(serviceRecord.serviceRecordID)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="AddNew" (click)="create()">Add New</button>
+  </div>
+  
+  <div class="createServiceRecord" *ngIf="Create">
+    <p>Service Record Detail Form</p>
+    <form #serviceRecordForm="ngForm" (ngSubmit)="submit(serviceRecordForm)">
+      <label for="vehicleId">Vehicle ID:</label>
+      <input type="number" name="vehicleId" id="vehicleId" #vehicleId="ngModel" ngModel placeholder="Vehicle ID" required /><br><br>
+      <p *ngIf="!vehicleId.valid && vehicleId.touched">Enter Vehicle ID</p>
+  
+      <label for="serviceAdvisorId">Service Advisor ID:</label>
+      <input type="text" name="serviceAdvisorId" id="serviceAdvisorId" #serviceAdvisorId="ngModel" ngModel placeholder="Service Advisor ID" required /><br><br>
+      <p *ngIf="!serviceAdvisorId.valid && serviceAdvisorId.touched">Enter Service Advisor ID</p>
+  
+      <label for="serviceDate">Service Date:</label>
+      <input type="date" name="serviceDate" id="serviceDate" #serviceDate="ngModel" ngModel required /><br><br>
+      <p *ngIf="!serviceDate.valid && serviceDate.touched">Enter Service Date</p>
+  
+      <label for="status">Status:</label>
+      <select name="status" id="status" #status="ngModel" ngModel required>
+        <option value="Serviced">Serviced</option>
+        <option value="Under Servicing">Under Servicing</option>
+      </select><br><br>
+      <p *ngIf="!status.valid && status.touched">Select Status</p>
+  
+      <button type="submit" [disabled]="!serviceRecordForm.valid">Submit</button>
+    </form>
+  </div>
+  
+  <div *ngIf="isEdit">
+    <h3>Update The Details for Service Record ID: {{upServiceRecord.serviceRecordID}}</h3>
+    <form #updateForm="ngForm" (ngSubmit)="update(upServiceRecord.serviceRecordID)">
+      <div>
+        <label for="vehicleId">Vehicle ID:</label>
+        <input id="vehicleId" type="number" [(ngModel)]="upServiceRecord.vehicleID" name="vehicleId" required />
+      </div><br>
+  
+      <div>
+        <label for="serviceAdvisorId">Service Advisor ID:</label>
+        <input id="serviceAdvisorId" type="text" [(ngModel)]="upServiceRecord.serviceAdvisorID" name="serviceAdvisorId" required />
+      </div><br>
+  
+      <div>
+        <label for="serviceDate">Service Date:</label>
+        <input id="serviceDate" type="date" [(ngModel)]="upServiceRecord.serviceDate" name="serviceDate" required />
+      </div><br>
+  
+      <div>
+        <label for="status">Status:</label>
+        <select id="status" [(ngModel)]="upServiceRecord.status" name="status" required>
+          <option value="Under Servicing">Under Servicing</option>
+          <option value="Serviced">Serviced</option>
+        </select>
+      </div><br>
+  
+      <button type="submit">Save Update</button>
+    </form>
+  </div>
+  
+          

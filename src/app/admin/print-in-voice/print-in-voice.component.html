@@ -1,0 +1,37 @@
+<div>
+    <h2>Vehicle Details</h2>
+    <p>Vehicle ID: {{ vr.vehicleID }}</p>
+    <p>Company: {{ vr.company }}</p>
+    <p>Model: {{ vr.model }}</p>
+    <p>Year: {{ vr.year }}</p>
+    <p>VIN: {{ vr.vin }}</p>
+    <p>Customer ID: {{ vr.customerID }}</p>
+    <p>Serviced Date: {{ vr.serviceDueDate | date: 'dd-MM-yyyy' }}</p>
+  </div>
+  <diV>
+    <table>
+        <thead>
+          <tr>
+           <th>Item Name</th>
+            <th>Quantity</th>
+            <th>Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let workItem of wi">
+           <td>{{ workItem.itemName }}</td>
+            <td>{{ workItem.quantity }}</td>
+            <td>{{ workItem.cost | currency }}</td>
+            </tr>
+            <tr>
+                <td>Total Amount</td>
+                <td></td>
+                <td>{{bill.amount | currency}}</td>
+            </tr>
+        </tbody>
+      </table>
+  </diV>
+  <div>
+    <h3>Amount to pe paid : {{bill.amount| currency}}</h3>
+    <button (click)="dispatch()" >Dispatch Vehicle</button>
+  </div>

@@ -1,0 +1,24 @@
+<div class="createServiceRecord" >
+    <p>Service Record Detail Form</p>
+    <form #serviceRecordForm="ngForm" (ngSubmit)="submit(serviceRecordForm)">
+      <label for="vehicleId">Vehicle ID: {{id}}</label><br><br>
+  
+      <label for="serviceAdvisorId">Service Advisor ID:</label>
+      <input type="text" name="serviceAdvisorId" id="serviceAdvisorId" #serviceAdvisorId="ngModel" ngModel placeholder="Service Advisor ID" required /><br><br>
+      <p *ngIf="!serviceAdvisorId.valid && serviceAdvisorId.touched">Enter Service Advisor ID</p>
+  
+      <label for="serviceDate">Service Date:</label>
+      <input type="date" name="serviceDate" id="serviceDate" #serviceDate="ngModel" ngModel required /><br><br>
+      <p *ngIf="!serviceDate.valid && serviceDate.touched">Enter Service Date</p>
+  
+      <label for="status">Status:</label>
+      <select name="status" id="status" #status="ngModel" ngModel required>
+        <option value="Serviced">Serviced</option>
+        <option value="Under Servicing">Under Servicing</option>
+      </select><br><br>
+      <p *ngIf="!status.valid && status.touched">Select Status</p>
+  
+      <button type="submit" [disabled]="!serviceRecordForm.valid">Submit</button>
+    </form>
+  </div>
+  

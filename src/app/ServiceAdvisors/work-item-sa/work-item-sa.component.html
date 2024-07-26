@@ -1,0 +1,79 @@
+<div *ngIf="!close">
+<div class="allWorkItemsTable" *ngIf="!isEdit">
+    <table>
+      <thead>
+        <tr>
+          <th>Work Item ID</th>
+          <th>Service Record ID</th>
+          <th>Item Name</th>
+          <th>Quantity</th>
+          <th>Cost</th>
+          <th>Update/Delete Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let workItem of allworkItem">
+          <td>{{ workItem.workItemID }}</td>
+          <td>{{ workItem.serviceRecordID }}</td>
+          <td>{{ workItem.itemName }}</td>
+          <td>{{ workItem.quantity }}</td>
+          <td>{{ workItem.cost | currency }}</td>
+          <td>
+            <button (click)="update(workItem.workItemID)">Update</button>
+            <button (click)="delete(workItem.workItemID)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="AddNew" (click)="create()">Add New</button>
+    <button (click)="bom()">Add To Bill</button>
+  </div>
+
+  <!-- Create Work Item Form -->
+  <div class="createWorkItem" *ngIf="Create">
+    <p>Work Item Detail Form</p>
+    <form #workItemForm="ngForm" (ngSubmit)="submit(workItemForm)">
+
+      
+  
+      <label for="itemName">Item Name:</label>
+      <input type="text" name="itemName" id="itemName" #itemName="ngModel" ngModel placeholder="Item Name" required /><br><br>
+      <p *ngIf="!itemName.valid && itemName.touched">Enter Item Name</p>
+  
+      <label for="quantity">Quantity:</label>
+      <input type="number" name="quantity" id="quantity" #quantity="ngModel" ngModel placeholder="Quantity" required /><br><br>
+      <p *ngIf="!quantity.valid && quantity.touched">Enter Quantity</p>
+  
+      <label for="cost">Cost:</label>
+      <input type="number" name="cost" id="cost" #cost="ngModel" ngModel placeholder="Cost" required /><br><br>
+      <p *ngIf="!cost.valid && cost.touched">Enter Cost</p>
+  
+      <button type="submit" [disabled]="!workItemForm.valid">Submit</button>
+    </form>
+  </div>
+  <div *ngIf="isEdit">
+    <h3>Update The Details for Work Item ID: {{upWorkItem.workItemID}}</h3>
+    <form #updateForm="ngForm" (ngSubmit)="update(upWorkItem.workItemID)">
+        
+      <div>
+        <label for="itemName">Item Name:</label>
+        <input id="itemName" type="text" [(ngModel)]="upWorkItem.itemName" name="itemName" required />
+      </div><br>
+  
+      <div>
+        <label for="quantity">Quantity:</label>
+        <input id="quantity" type="number" [(ngModel)]="upWorkItem.quantity" name="quantity" required />
+      </div><br>
+  
+      <div>
+        <label for="cost">Cost:</label>
+        <input id="cost" type="number" [(ngModel)]="upWorkItem.cost" name="cost" required />
+      </div><br>
+  
+      <button type="submit">Save Update</button>
+    </form>
+  </div>
+</div>
+<div *ngIf="close">
+    <p>Service Record Id: {{srId}} is done ,Now u can go to Dashboard</p>
+</div>
